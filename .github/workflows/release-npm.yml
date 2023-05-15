@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   publish-npm:
-    name: Release package
+    name: Release NPM Package
     runs-on: ubuntu-latest
 
     steps:

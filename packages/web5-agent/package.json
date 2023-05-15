@@ -17,5 +17,9 @@
   ],
   "devDependencies": {
     "esbuild": "^0.17.19"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/frankhinek/test-web5-js"
   }
 }
