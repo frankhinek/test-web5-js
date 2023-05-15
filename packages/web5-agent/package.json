@@ -13,5 +13,8 @@
   },
   "files": [
     "src"
-  ]
+  ],
+  "devDependencies": {
+    "esbuild": "^0.17.19"
+  }
 }
