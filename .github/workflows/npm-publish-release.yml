@@ -20,6 +20,6 @@ jobs:
       - run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-      - run: npm publish --ws --access public
+      - run: npm publish --ws --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

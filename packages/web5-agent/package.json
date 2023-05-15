@@ -1,10 +1,11 @@
 {
   "name": "@test-2023-05/web5-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "build": "esbuild main.js --bundle --outfile=dist/bundle.js --platform=browser"
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.1",

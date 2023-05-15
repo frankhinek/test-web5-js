@@ -1,6 +1,6 @@
 {
   "name": "@test-2023-05/web5",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "type": "module",
   "main": "main.js",
   "scripts": {
