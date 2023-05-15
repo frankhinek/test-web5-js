@@ -1,0 +1,17 @@
+{
+  "name": "@test-2023-05/dids",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "@noble/secp256k1": "1.7.1",
+    "ed2curve": "0.3.0",
+    "multiformats": "11.0.2"
+  },
+  "files": [
+    "src"
+  ]
+}
