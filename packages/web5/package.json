@@ -1,6 +1,6 @@
 {
   "name": "@test-2023-05/web5",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "type": "module",
   "main": "main.js",
   "scripts": {
@@ -9,6 +9,11 @@
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.1",
+    "@test-2023-05/crypto": "0.1.1",
+    "@test-2023-05/dids": "0.1.1",
+    "@test-2023-05/web5-agent": "0.1.1",
+    "@test-2023-05/web5-proxy-agent": "0.1.1",
+    "@test-2023-05/web5-user-agent": "0.1.2",
     "ed2curve": "0.3.0",
     "multiformats": "11.0.2"
   },

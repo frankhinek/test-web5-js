@@ -22,7 +22,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
-          node-version: 18.16.0
+          node-version: 18
           registry-url: https://registry.npmjs.org/
 
       - name: Install latest npm
@@ -35,7 +35,7 @@ jobs:
         run: npm run build
 
       # Note - this is not required but it gives a clean failure prior to attempting a release if the GH workflow runner is not authenticated with NPMjs.com
-      - name: Display the npm username of the currently logged-in user.
+      - name: Display the npm username of the currently logged-in user
         run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
