@@ -81,8 +81,10 @@ jobs:
         run: npm run build
 
       - name: Publish Release to NPM Public Registry
+        if: env.IS_LATEST == 'true'
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         run: |
           echo "Publishing package: @tbd54566975/${{ matrix.package }}"
+          cd packages/${{ matrix.package }}
           pwd
