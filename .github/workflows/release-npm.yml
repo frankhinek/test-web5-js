@@ -45,9 +45,9 @@ jobs:
 
       # Note - this is not required but it gives a clean failure prior to attempting a release if the GH workflow runner is not authenticated with NPMjs.com
       - name: Verify NPM token is authenticated with NPMjs.com
-        run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: npm whoami
 
       - name: Check if GitHub repo package version is latest
         env:
@@ -88,6 +88,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         run: |
-          echo "Publishing @tbd54566975/${{ matrix.package }}@${{ env.REPO_VERSION }}"
           cd packages/${{ matrix.package }}
-          #npm publish --access public --provenance
+          npm publish --access public --provenance
+        shell: bash
