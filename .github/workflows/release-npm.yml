@@ -15,6 +15,18 @@ jobs:
     name: Release NPM Package
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        package:
+          [
+            "crypto",
+            "dids",
+            "web5",
+            "web5-agent",
+            "web5-proxy-agent",
+            "web5-user-agent",
+          ]
+
     steps:
       - name: Checkout source
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
@@ -27,6 +39,9 @@ jobs:
 
       - name: Install latest npm
         run: npm install -g npm@latest
+
+      - name: Install semver utility
+        run: npm install -g semver@7.5.1
 
       - name: Install dependencies
         run: npm ci
@@ -41,6 +56,24 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
       - name: Publish Release to NPM Public Registry
-        run: npm publish --ws --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: |
+          echo "Publishing package: @tbd54566975/${{ matrix.package }}"
+          cd packages/${{ matrix.package }}
+
+          # Fetch the published version on NPMjs.com.
+          PUBLISHED_VERSION=$(npm view @test-2023-05/crypto version)
+
+          # Fetch the version in the GitHub repo's package.json file.
+          REPO_VERSION=$(node -p "require('./package.json').version")
+
+          # If the repo version is greater than the NPMjs.com version, publish a new release.
+          IS_GREATER=$(semver --range ">$REPO_VERSION" $PUBLISHED_VERSION)
+          if [ -n "$IS_GREATER" ] ; then
+            echo "Publishing @tbd54566975/${{ matrix.package }}@$REPO_VERSION"
+            npm publish --access public --provenance
+          else
+            echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is already published or version is lower"
+          fi
+        shell: bash
