@@ -61,13 +61,16 @@ jobs:
 
           # Fetch the version in the GitHub repo's package.json file.
           REPO_VERSION=$(node -p "require('./package.json').version")
+          echo "REPO_VERSION=$REPO_VERSION" >> $GITHUB_ENV
           echo "Repo Version: $REPO_VERSION"
 
           # Compare the repo and NPMjs.com package versions.
           IS_GREATER=$(semver --range ">$PUBLISHED_VERSION" $REPO_VERSION || true)
           if [ -n "$IS_GREATER" ] ; then
+            echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is latest"
             echo "IS_LATEST=true" >> $GITHUB_ENV
           else
+            echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is already published or repo version is lower"
             echo "IS_LATEST=false" >> $GITHUB_ENV
           fi
         shell: bash
@@ -80,11 +83,11 @@ jobs:
         if: env.IS_LATEST == 'true'
         run: npm run build
 
-      - name: Publish Release to NPM Public Registry
+      - name: Publish @tbd54566975/${{ matrix.package }}@${{ env.REPO_VERSION }}
         if: env.IS_LATEST == 'true'
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         run: |
-          echo "Publishing package: @tbd54566975/${{ matrix.package }}"
+          echo "Publishing @tbd54566975/${{ matrix.package }}@${{ env.REPO_VERSION }}"
           cd packages/${{ matrix.package }}
-          pwd
+          #npm publish --access public --provenance
