@@ -63,7 +63,7 @@ jobs:
           cd packages/${{ matrix.package }}
 
           # Fetch the published version on NPMjs.com.
-          PUBLISHED_VERSION=$(npm view @test-2023-05/crypto version)
+          PUBLISHED_VERSION=$(npm view @test-2023-05/${{ matrix.package }} version)
           echo "Published Version: $PUBLISHED_VERSION"
 
           # Fetch the version in the GitHub repo's package.json file.
@@ -73,10 +73,10 @@ jobs:
           # If the repo version is greater than the NPMjs.com version, publish a new release.
           IS_GREATER=$(semver --range ">$REPO_VERSION" $PUBLISHED_VERSION)
           echo "Is Greater Check: $IS_GREATER"
-          if [ -n "$IS_GREATER" ] ; then
-            echo "Publishing @tbd54566975/${{ matrix.package }}@$REPO_VERSION"
-            #npm publish --access public --provenance
-          else
-            echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is already published or version is lower"
-          fi
+          #if [ -n "$IS_GREATER" ] ; then
+          #  echo "Publishing @tbd54566975/${{ matrix.package }}@$REPO_VERSION"
+          #  #npm publish --access public --provenance
+          #else
+          #  echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is already published or version is lower"
+          #fi
         shell: bash
