@@ -67,12 +67,12 @@ jobs:
           echo "Published Version: $PUBLISHED_VERSION"
 
           # Fetch the version in the GitHub repo's package.json file.
-          REPO_VERSION=$(node -p "require('./package.json').version")
-          echo "Repo Version: $REPO_VERSION"
+          #REPO_VERSION=$(node -p "require('./package.json').version")
+          #echo "Repo Version: $REPO_VERSION"
 
           # If the repo version is greater than the NPMjs.com version, publish a new release.
-          IS_GREATER=$(semver --range ">$REPO_VERSION" $PUBLISHED_VERSION)
-          echo "Is Greater Check: $IS_GREATER"
+          #IS_GREATER=$(semver --range ">$REPO_VERSION" $PUBLISHED_VERSION)
+          #echo "Is Greater Check: $IS_GREATER"
           #if [ -n "$IS_GREATER" ] ; then
           #  echo "Publishing @tbd54566975/${{ matrix.package }}@$REPO_VERSION"
           #  #npm publish --access public --provenance
