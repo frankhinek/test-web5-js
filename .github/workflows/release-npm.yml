@@ -43,40 +43,33 @@ jobs:
       - name: Install semver utility
         run: npm install -g semver@7.5.1
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build all workspace packages
-        run: npm run build
-
-      # Note - this is not required but it gives a clean failure prior to attempting a release if the GH workflow runner is not authenticated with NPMjs.com
-      - name: Display the npm username of the currently logged-in user
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-
-      - name: Publish Release to NPM Public Registry
+      - name: Check if GitHub repo package version is latest
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         run: |
-          echo "Publishing package: @tbd54566975/${{ matrix.package }}"
           cd packages/${{ matrix.package }}
 
           # Fetch the published version on NPMjs.com.
-          PUBLISHED_VERSION=$(npm view @test-2023-05/crypto version)
+          PUBLISHED_VERSION=$(npm view @test-2023-05/${{ matrix.package }} version)
           echo "Published Version: $PUBLISHED_VERSION"
 
           # Fetch the version in the GitHub repo's package.json file.
           REPO_VERSION=$(node -p "require('./package.json').version")
           echo "Repo Version: $REPO_VERSION"
 
-          # If the repo version is greater than the NPMjs.com version, publish a new release.
-          IS_GREATER=$(semver --range ">$REPO_VERSION" $PUBLISHED_VERSION)
-          echo "Is Greater Check: $IS_GREATER"
+          # Compare the repo and NPMjs.com package versions.
+          IS_GREATER=$(semver --range ">$PUBLISHED_VERSION" $REPO_VERSION || true)
           if [ -n "$IS_GREATER" ] ; then
-            echo "Publishing @tbd54566975/${{ matrix.package }}@$REPO_VERSION"
-            #npm publish --access public --provenance
+            echo "IS_LATEST=true" >> $GITHUB_ENV
           else
-            echo "@tbd54566975/${{ matrix.package }}@$REPO_VERSION is already published or version is lower"
+            echo "IS_LATEST=false" >> $GITHUB_ENV
           fi
         shell: bash
+
+      - name: Install dependencies
+        if: ${{ env.IS_LATEST == 'true' }}
+        run: npm ci
+
+      - name: Build all workspace packages
+        if: ${{ env.IS_LATEST == 'true' }}
+        run: npm run build
