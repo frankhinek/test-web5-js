@@ -63,8 +63,8 @@ jobs:
           cd packages/${{ matrix.package }}
 
           # Fetch the published version on NPMjs.com.
-          #PUBLISHED_VERSION=$(npm view @test-2023-05/${{ matrix.package }} version)
-          #echo "Published Version: $PUBLISHED_VERSION"
+          PUBLISHED_VERSION=$(npm view @test-2023-05/${{ matrix.package }} version)
+          echo "Published Version: $PUBLISHED_VERSION"
 
           # Fetch the version in the GitHub repo's package.json file.
           REPO_VERSION=$(node -p "require('./package.json').version")
