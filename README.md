@@ -1,7 +1,7 @@
 # Web5 JS SDK
 
 [![NPM](https://img.shields.io/npm/v/@tbd54566975/web5.svg?style=flat-square&color=FFEC19&santize=true)](https://www.npmjs.com/package/@tbd54566975/web5)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/TBD54566975/web5-js/tests-ci.yml?branch=main&style=flat-square&color=50fa7b)]()
+[![Build Status](https://img.shields.io/github/actions/workflow/status/TBD54566975/web5-js/tests-ci.yml?branch=main&style=flat-square)]()
 [![License](https://img.shields.io/npm/l/@tbd54566975/web5.svg?style=flat-square&color=24f2ff&santize=true)](https://www.npmjs.com/package/@tbd54566975/web5)
 [![Chat](https://img.shields.io/badge/chat-on%20discord-7289da.svg?style=flat-square&color=9a1aff&sanitize=true)](https://discord.com/channels/937858703112155166/969272658501976117)
 
