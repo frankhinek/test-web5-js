@@ -2,10 +2,11 @@
   "name": "@test-2023-05/web5-proxy-agent",
   "version": "0.1.1",
   "type": "module",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
-    "start": "node main.js",
-    "build": "esbuild main.js --bundle --outfile=dist/bundle.js --platform=browser"
+    "start": "node src/main.js",
+    "build": "rimraf dist && node build/bundles.js && echo '{\"type\": \"commonjs\"}' > ./dist/cjs/package.json && tsc",
+    "test:node": "rimraf __tests__ && tsc -p tsconfig.test.json && mocha \"__tests__/**/*.spec.js\" --exit"
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.1",
@@ -17,7 +18,14 @@
     "src"
   ],
   "devDependencies": {
-    "esbuild": "^0.17.19"
+    "c8": "7.14.0",
+    "chai": "4.3.7",
+    "codecov": "3.8.3",
+    "esbuild": "0.17.19",
+    "mocha": "10.2.0",
+    "node-stdlib-browser": "1.2.0",
+    "rimraf": "5.0.1",
+    "typescript": "5.0.4"
   },
   "repository": {
     "type": "git",

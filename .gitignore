@@ -1,5 +1,16 @@
-# Created by https://www.toptal.com/developers/gitignore/api/node
-# Edit at https://www.toptal.com/developers/gitignore?templates=node
+# Ignore underlying DWN stores and indexes
+**/DATASTORE/
+**/EVENTLOG/
+**/INDEX/
+**/MESSAGESTORE/
+data
+
+**/__tests__/
+**/__TESTDATA__/
+packages/web5-user-agent/src/test-sync-api.ts
+
+# bundle metadata
+bundle-metadata.json
 
 ### Node ###
 # Logs
@@ -141,4 +152,4 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/node
+.DS_STORE
