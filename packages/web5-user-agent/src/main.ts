@@ -5,3 +5,7 @@ export function hello() {
 export function add(a: number, b: number): Number {
   return a + b;
 }
+
+export function subtract(a: number, b: number): Number {
+  return a - b;
+}
