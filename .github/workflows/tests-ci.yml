@@ -1,4 +1,4 @@
-name: Run Tests in Node and Browsers
+name: Continuous Integration
 
 on:
   push:
