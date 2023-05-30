@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/main.js",
     "build": "rimraf dist && node build/bundles.js && echo '{\"type\": \"commonjs\"}' > ./dist/cjs/package.json && tsc",
-    "test:node": "rimraf __tests__ && tsc -p tsconfig.test.json && mocha \"__tests__/**/*.spec.js\" --exit"
+    "test:node": "rimraf __tests__ && tsc -p tsconfig.test.json && c8 mocha"
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.1",
