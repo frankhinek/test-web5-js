@@ -12,6 +12,7 @@
   ],
   "reporter": [
     "cobertura",
-    "json-summary"
+    "html",
+    "text"
   ]
 }
