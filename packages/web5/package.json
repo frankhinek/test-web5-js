@@ -24,7 +24,6 @@
   "devDependencies": {
     "c8": "7.14.0",
     "chai": "4.3.7",
-    "codecov": "3.8.3",
     "esbuild": "0.17.19",
     "mocha": "10.2.0",
     "node-stdlib-browser": "1.2.0",
