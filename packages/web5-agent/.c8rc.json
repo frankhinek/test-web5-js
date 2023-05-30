@@ -11,9 +11,7 @@
     "__tests__/types/**"
   ],
   "reporter": [
-    "text",
     "cobertura",
-    "html",
     "json-summary"
   ]
 }

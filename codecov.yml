@@ -1,0 +1,7 @@
+comment:
+  layout: "header, diff, flags, components"
+
+component_management:
+  default_rules: # Rules inherited by all components that don't define a tag for themselves.
+    paths:
+      - "packages/*"
