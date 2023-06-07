@@ -1,0 +1,86 @@
+name: Alpha to NPM Registry
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish-alpha-npm:
+    name: NPM Publish
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        package:
+          [
+            "crypto",
+            "dids",
+            "web5",
+            "web5-agent",
+            "web5-proxy-agent",
+            "web5-user-agent",
+          ]
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
+        with:
+          node-version: 18.16.0
+          registry-url: https://registry.npmjs.org/
+
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
+      # Note - this is not required but it gives a clean failure prior to attempting a release if the GH workflow runner is not authenticated with NPMjs.com
+      - name: Verify NPM token is authenticated with NPMjs.com
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: npm whoami
+
+      - name: Fetch the version in the GitHub repo's package.json file
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: |
+          cd packages/${{ matrix.package }}
+          REPO_VERSION=$(node -p "require('./package.json').version")
+          echo "REPO_VERSION=$REPO_VERSION" >> $GITHUB_ENV
+          echo "Repo Version: $REPO_VERSION"
+        shell: bash
+
+      - name: Generate the alpha version string
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: |
+          cd packages/${{ matrix.package }}
+          SHORT_COMMIT_SHA=$(git rev-parse --short HEAD)
+          YYYYMMDD=$(date +'%Y%m%d')
+          ALPHA_VERSION="${{ env.REPO_VERSION }}-alpha-$YYYYMMDD-$SHORT_COMMIT_SHA"
+          echo "ALPHA_VERSION=$ALPHA_VERSION" >> $GITHUB_ENV
+          echo "Alpha Version: $ALPHA_VERSION"
+        shell: bash
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build all workspace packages
+        run: npm run build
+
+      - name: Publish @tbd54566975/${{ matrix.package }}@${{ env.ALPHA_VERSION }}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+        run: |
+          cd packages/${{ matrix.package }}
+          npm version ${{ env.ALPHA_VERSION }} --no-git-tag-version
+          npm publish --tag alpha --no-git-tag-version --access public --provenance
+        shell: bash
