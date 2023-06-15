@@ -4,13 +4,15 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+# Allow only one concurrent deployment,but do NOT cancel in-progress runs as
+# we want to allow these alpha deployments to complete.
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write # necessary for NPM provenance
 
 jobs:
   publish-alpha-npm:
@@ -21,6 +23,7 @@ jobs:
       matrix:
         package:
           [
+            "common",
             "crypto",
             "dids",
             "web5",
@@ -36,7 +39,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@64ed1c7eab4cce3362f8c340dee64e5eaeef8f7c # v3.6.0
         with:
-          node-version: 18.16.0
+          node-version: 18
           registry-url: https://registry.npmjs.org/
 
       - name: Install latest npm

@@ -3,12 +3,17 @@ name: Release to NPM Registry
 on:
   release:
     types: [created]
+  workflow_dispatch:
 
-concurrency: ${{ github.workflow }}-${{ github.ref }}
+# Allow only one concurrent deployment,but do NOT cancel in-progress runs as
+# we want to allow these release deployments to complete.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
-  id-token: write
+  id-token: write # necessary for NPM provenance
 
 jobs:
   publish-npm:
@@ -19,6 +24,7 @@ jobs:
       matrix:
         package:
           [
+            "common",
             "crypto",
             "dids",
             "web5",
@@ -56,7 +62,7 @@ jobs:
           cd packages/${{ matrix.package }}
 
           # Fetch the published version on NPMjs.com.
-          PUBLISHED_VERSION=$(npm view @test-2023-05/${{ matrix.package }} version)
+          PUBLISHED_VERSION=$(npm view @tbd54566975/${{ matrix.package }} version 2>/dev/null || echo "0.0.0")
           echo "Published Version: $PUBLISHED_VERSION"
 
           # Fetch the version in the GitHub repo's package.json file.
