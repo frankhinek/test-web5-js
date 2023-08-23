@@ -58,7 +58,7 @@ jobs:
           done
         shell: bash
 
-      - name: Update package.json @web5/* dependency versions
+      - name: Bump package.json @web5/* dependency versions
         run: node ./scripts/bump-workspace.mjs
 
       - name: Install dependencies

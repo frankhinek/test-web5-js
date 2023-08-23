@@ -66,15 +66,21 @@ async function updateDependencies(workspaces, packageVersions) {
     const packageJson = await PackageJson.load(workspace);
 
     const dependencies = packageJson.content.dependencies;
+    const devDependencies = packageJson.content.devDependencies;
 
     for (const packageName in packageVersions) {
-    // If the package is a dependency, update to the latest version.
+      // If the package is a dependency, update to the latest version.
       if (packageName in dependencies) {
         dependencies[packageName] = packageVersions[packageName];
       }
+      // If the package is a devDependency, update to the latest version.
+      if (packageName in devDependencies) {
+        devDependencies[packageName] = packageVersions[packageName];
+      }
     }
 
-    packageJson.update({ dependencies });
+    // Write changes, if any, to each `package.json` file.
+    packageJson.update({ dependencies, devDependencies });
     await packageJson.save();
   }
 }
