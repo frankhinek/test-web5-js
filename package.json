@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/web5-agent",
+    "packages/common",
     "packages/crypto",
     "packages/dids",
+    "packages/agent",
     "packages/web5-user-agent",
     "packages/web5-proxy-agent",
     "packages/web5"
@@ -16,7 +17,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TBD54566975/web5-js"
+    "url": "git+https://github.com/frankhinek/test-web5-js.git"
   },
   "license": "Apache-2.0",
   "devDependencies": {

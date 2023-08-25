@@ -8,9 +8,9 @@ import PackageJson from '@npmcli/package-json';
 /**
  * List of workspace packages to exclude from processing. Add any
  * package names that should be excluded to this array.
- * 
+ *
  * @example
- * 
+ *
  * const excludeWorkspaces = ['packages/experimental-salamander'];
  */
 const excludeWorkspaces = [''];
@@ -65,8 +65,8 @@ async function updateDependencies(workspaces, packageVersions) {
   for (const workspace of workspaces) {
     const packageJson = await PackageJson.load(workspace);
 
-    const dependencies = packageJson.content.dependencies;
-    const devDependencies = packageJson.content.devDependencies;
+    const dependencies = packageJson.content.dependencies ?? [];
+    const devDependencies = packageJson.content.devDependencies ?? [];
 
     for (const packageName in packageVersions) {
       // If the package is a dependency, update to the latest version.
@@ -99,4 +99,4 @@ async function main() {
 main().catch((error) => {
   console.error(error);
   process.exit(1);
-})
+});

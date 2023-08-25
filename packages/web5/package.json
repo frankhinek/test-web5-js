@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@noble/secp256k1": "1.7.1",
-    "@test-2023-05/crypto": "0.1.1",
+    "@test-2023-05/crypto": "0.1.2",
     "@test-2023-05/dids": "0.1.1",
     "@test-2023-05/web5-agent": "0.1.1",
     "@test-2023-05/web5-proxy-agent": "0.1.1",
@@ -32,6 +32,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/frankhinek/test-web5-js"
+    "url": "git+https://github.com/frankhinek/test-web5-js.git"
   }
 }
