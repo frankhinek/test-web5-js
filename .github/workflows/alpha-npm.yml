@@ -43,6 +43,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
         run: npm whoami
 
+      - name: Install dependencies
+        run: npm ci
+
       - name: Generate alpha prerelease and bump package.json @web5/* versions
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
@@ -51,11 +54,7 @@ jobs:
           YYYYMMDD=$(date +'%Y%m%d')
           ALPHA_PRERELEASE="alpha-$YYYYMMDD-$SHORT_COMMIT_SHA"
           node ./scripts/bump-workspace.mjs --prerelease=$ALPHA_PRERELEASE
-          cat packages/web5/package.json
         shell: bash
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Build all workspace packages
         run: npm run build

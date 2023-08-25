@@ -6,7 +6,7 @@
     "packages/common",
     "packages/crypto",
     "packages/dids",
-    "packages/agent",
+    "packages/web5-agent",
     "packages/web5-user-agent",
     "packages/web5-proxy-agent",
     "packages/web5"

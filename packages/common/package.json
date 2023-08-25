@@ -75,7 +75,6 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "dependencies": {},
   "devDependencies": {
     "@types/chai": "4.3.0",
     "@types/eslint": "8.37.0",
